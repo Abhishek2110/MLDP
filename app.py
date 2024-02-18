@@ -31,12 +31,24 @@ def load_model():
     model = tf.keras.models.load_model('mango_model.h5')
     return model
 
+def import_and_predict(image_data, model):
+    size = (224,224)    
+    image = ImageOps.fit(image_data, size, Image.Resampling.LANCZOS)
+    img = np.asarray(image)
+    img_reshape = img[np.newaxis,...]
+    prediction = model.predict(img_reshape)
+    return prediction
+
 def get_remedy_suggestion(disease):
-    # Add your remedy suggestions for different diseases here
+    # Remedy suggestions for different diseases
     remedy_suggestions = {
         'Anthracnose': "Bio-fungicides based on Bacillus subtilis or Bacillus myloliquefaciens work fine if applied during favorable weather conditions. Hot water treatment of seeds or fruits (48°C for 20 minutes) can kill any fungal residue and prevent further spreading of the disease in the field or during transport.",
         'Bacterial Canker': "Prune flowering trees during blooming when wounds heal fastest. Remove wilted or dead limbs well below infected areas. Avoid pruning in early spring and fall when bacteria are most active. If using string trimmers around the base of trees, avoid damaging bark with breathable Tree Wrap to prevent infection.",
-        # Add remedy suggestions for other diseases as needed
+        'Cutting Weevil': "Cutting Weevil can be treated by spraying of insecticides such as Deltamethrin (1 mL/L) or Cypermethrin (0.5 mL/L) or Carbaryl (4 g/L) during new leaf emergence can effectively prevent the weevil damage.",
+        'Die Back': "After pruning, apply copper oxychloride at a concentration of '0.3%' on the wounds. Apply Bordeaux mixture twice a year to reduce the infection rate on the trees. Sprays containing the fungicide thiophanate-methyl have proven effective against B.",
+        'Gall Midge': "Use yellow sticky traps to catch the flies. Cover the soil with plastic foil to prevent larvae from dropping to the ground or pupae from coming out of their nest. Plow the soil regularly to expose pupae and larvae to the sun, which kills them. Collect and burn infested tree material during the season.",
+        'Powdery Mildew': "In order to control powdery mildew, three sprays of fungicides are recommended. The first spray comprising of wettable sulphur (0.2%, i.e., 2g per litre of water) should be done when the panicles are 8 -10 cm in size as a preventive spray.",
+        'Sooty Mould': "The insects causing the mould are killed by spraying with carbaryl or phosphomidon 0.03%. It is followed by spraying with a dilute solution of starch or maida 5%. On drying, the starch comes off in flakes and the process removes the black mouldy growth fungi from different plant parts."
     }
     return remedy_suggestions.get(disease, "Remedy suggestion not available.")
 
